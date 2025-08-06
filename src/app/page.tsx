@@ -1,16 +1,14 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { get } from "http";
 import Link from "next/link";
 import { UploadDialog } from "~/_components/upload-dialog";
+import { getMyImages } from "~/server/queries";
 import { UploadButton } from "~/utils/uploadthing";
 
+export const dynamic = "force-dynamic"; 
+
 async function Images() {
-  const mockUrls = ["https://imageio.forbes.com/specials-images/imageserve/664b9c049314ec4607e8ee46/Porsche-Sonderwunsch-Haus--The-Taycan-4S-Cross-Turismo-For-Jennie-Ruby-Jane---/0x0.jpg?format=jpg&crop=2432,1824,x0,y291,safe&width=960", "https://variety.com/wp-content/uploads/2024/09/Final-Jennie-Partnership-Announce-Photo-PC_-Songyi-Yoon-e1725833165699.png?w=985&h=657&crop=1", "https://v4sy6yfpwf.ufs.sh/f/JmDEnt4NAnPrL8xmmSMQzKH3ekUJYjsGwSFOlZCVD7xEA9XR", "https://v4sy6yfpwf.ufs.sh/f/JmDEnt4NAnPrvcpPH1ukBeiRfcToqlFLb8Mpa0IgWGQjP2NZ"];
-
-  const images = mockUrls.map((url, index) => ({
-    id : index + 1,
-    url,
-
-  }))
+  const images = await getMyImages();
 
 return (
   <div>
@@ -22,7 +20,7 @@ return (
         <div key={image.id} className="flex w-64 flex-col">
           <div className="relative aspect-video bg-zinc-900 overflow-hidden">
             <img
-              src={image.url}
+              src={image.imageUrl}
               alt={`Image ${image.id}`}
               className="h-full w-full object-cover"
             />
