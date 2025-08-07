@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
-import { UploadButton } from "~/utils/uploadthing";
+import { UploadButton, useUploadThing } from "~/utils/uploadthing";
 
 export function UploadDialog() {
   const [open, setOpen] = useState(false);
@@ -41,11 +41,46 @@ export function UploadDialog() {
     }
   };
 
-  const handleImageUpload = async () => {
+  const { startUpload, isUploading } = useUploadThing("imageUploader", {
+      onUploadBegin: () => {
+        toast(
+          <div className="flex items-center gap-2">
+            <span className="text-lg ">Uploading...</span>
+          </div>,
+          {
+            duration: 100000,
+            id: "upload-begin",
+
+          },
+        );
+    },
+       onUploadError: () => {
+      toast.dismiss("upload-begin");
+      toast.error(
+        <span className="text-lg">Upload Error!</span>
+      )
+    },
+    onClientUploadComplete: () => {
+      toast.dismiss("upload-begin");
+      toast.success(
+        <span className="text-lg">Upload Completed!</span>
+      )
+      router.refresh();
+    },
+  });
+
+    const onSubmit = async () => {
     if (!inputRef.current?.files?.length) {
       toast.warning(<span className="text-lg">No File Selected!</span>);
       return;
     }
+
+    setOpen(false);
+
+    const selectedImage = Array.from(inputRef.current.files)
+    await startUpload(selectedImage);
+    setSelectedImageName(null);
+    setSelectedImageUrl(null);
   };
 
   return (
@@ -64,7 +99,7 @@ export function UploadDialog() {
     //     toast.error(`ERROR! ${error.message}`);
     //   }}
     // />
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
           <Button variant="outline">Upload Image</Button>
@@ -73,7 +108,7 @@ export function UploadDialog() {
           <DialogHeader>
             <DialogTitle>Upload Image</DialogTitle>
             <DialogDescription>
-              Select an image to upload. Click save when &apos; re done;
+              Select an image to upload. Click save when your'e done.
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-2"> 
@@ -93,18 +128,20 @@ export function UploadDialog() {
             type="file" 
             ref={inputRef} 
             className="sr-only" 
-            accept="image"
+            accept="image/*"
             onChange={handleImageSelect}
             />
             {setSelectedImageName !== null && (
               <div>Selected Image: {selectedImageName}</div>
             )}
           </div>
+          <form onSubmit={onSubmit} className="spac-y-8">
           <DialogFooter>
-            <DialogClose asChild>
-              <Button type="submit">Submit</Button>
-            </DialogClose>
+           <Button type="submit" disabled={isUploading} onClick={onSubmit}>
+              Submit
+            </Button>
           </DialogFooter>
+          </form>
         </DialogContent>
       </form>
     </Dialog>
