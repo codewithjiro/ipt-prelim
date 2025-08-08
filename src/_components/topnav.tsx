@@ -6,7 +6,7 @@ export function TopNav() {
       <div>TalkMate+</div>
       <div>
         <SignedOut>
-          <SignInButton mode="modal"/>
+          <SignInButton />
         </SignedOut>
         <SignedIn>
           <UserButton />

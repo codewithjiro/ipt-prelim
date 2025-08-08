@@ -42,7 +42,7 @@ const formSchema = z.object({
   Description: z 
   .string()
   .min(10, {message: "Description must be atleast 10 characters long"})
-  .max(50)
+  .max(1000)
 });
 
 export function UploadDialog() {

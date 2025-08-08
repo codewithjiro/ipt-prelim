@@ -54,10 +54,10 @@ importers:
         specifier: ^3.4.4
         version: 3.4.7
       react:
-        specifier: ^19.0.0
+        specifier: ^19.1.1
         version: 19.1.1
       react-dom:
-        specifier: ^19.0.0
+        specifier: ^19.1.1
         version: 19.1.1(react@19.1.1)
       react-hook-form:
         specifier: ^7.62.0
@@ -82,13 +82,13 @@ importers:
         specifier: ^4.0.15
         version: 4.1.11
       '@types/node':
-        specifier: ^20.14.10
+        specifier: ^20.19.9
         version: 20.19.9
       '@types/react':
-        specifier: ^19.0.0
+        specifier: ^19.1.9
         version: 19.1.9
       '@types/react-dom':
-        specifier: ^19.0.0
+        specifier: ^19.1.7
         version: 19.1.7(@types/react@19.1.9)
       drizzle-kit:
         specifier: ^0.30.5
