@@ -84,7 +84,7 @@ export default async function HomePage() {
           <div className="mb-8 animate-float rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 p-6 shadow-xl">
           </div>
           <h1 className="text-3xl font-bold text-white sm:text-4xl">
-            Welcome to TalkMate+Pro
+            Welcome to TalkMate+ Pro
           </h1>
           <p className="mt-4 max-w-lg text-lg text-gray-400">
             Your personal library for sign language and non-verbal communication
