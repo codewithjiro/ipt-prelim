@@ -2,11 +2,11 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export function TopNav() {
   return (
-    <nav className="flex w-full items-center justify-between border-b p-4 text-xl font-semibold">
-      <div>IPT</div>
+     <nav className="flex w-full items-center justify-between bg-gradient-to-r from-gray-900 via-black to-gray-900 px-6 py-4 shadow-md">
+      <div>TalkMate+</div>
       <div>
         <SignedOut>
-          <SignInButton />
+          <SignInButton mode="modal"/>
         </SignedOut>
         <SignedIn>
           <UserButton />

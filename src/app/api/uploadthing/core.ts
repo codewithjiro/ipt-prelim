@@ -22,7 +22,10 @@ export const ourFileRouter = {
       maxFileCount: 1,
     },
   })
-  .input(z.object({ imageName: z.string().min(5) })) // Input schema for the file route
+  .input(z.object({ 
+    imageName: z.string().min(5),
+    description: z.string().min(5),
+  })) // Input schema for the file route
   
     // Set permissions and file types for this FileRoute
     .middleware(async ({ req, input }) => {
@@ -33,7 +36,7 @@ export const ourFileRouter = {
       if (!user.userId) throw new UploadThingError("Unauthorized");
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: user.userId, imageName: input.imageName };
+      return { userId: user.userId, imageName: input.imageName, description: input.description };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
@@ -44,6 +47,7 @@ export const ourFileRouter = {
       await db.insert(images).values({
         fileName: file.name,
         imageName: metadata.imageName,
+        description: metadata.description,
         imageUrl: file.ufsUrl,
         userId: metadata.userId,
       });

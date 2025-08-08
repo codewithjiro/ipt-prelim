@@ -20,6 +20,7 @@ interface ImageModalProps {
     id: number;
     fileName: string | null;
     imageName: string | null;
+    description: string | null;
     imageUrl: string;
     userId: string;
     createdAt: Date;
@@ -94,6 +95,15 @@ export function ImageModal({ image, children }: ImageModalProps) {
                 </div>
 
                 <div className="flex flex-col">
+  <span className="text-sm font-medium text-gray-100">
+    Description:
+  </span>
+  <span>
+    {image.description ? image.description : "No description provided"}
+  </span>
+</div>
+
+                <div className="flex flex-col">
                   <span className="text-sm font-medium text-gray-100">
                     Created At:
                   </span>
@@ -103,6 +113,9 @@ export function ImageModal({ image, children }: ImageModalProps) {
                 <div className="">
                   <DeleteButton idAsNumber={image.id} />
                 </div>
+
+          
+
               </div>
             </div>
           </div>

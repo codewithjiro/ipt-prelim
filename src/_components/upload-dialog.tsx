@@ -32,12 +32,17 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
+import { Description } from "@radix-ui/react-dialog";
 
 const formSchema = z.object({
   imageName: z
     .string()
     .min(5, { message: "Image Name must be at least 5 characters long" })
     .max(50),
+  Description: z 
+  .string()
+  .min(10, {message: "Description must be atleast 10 characters long"})
+  .max(50)
 });
 
 export function UploadDialog() {
@@ -47,6 +52,7 @@ export function UploadDialog() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       imageName: "",
+      Description: "",
     },
   });
 
@@ -102,6 +108,7 @@ export function UploadDialog() {
     const selectedImage = Array.from(inputRef.current.files);
     await startUpload(selectedImage, {
       imageName: form.getValues("imageName"),
+      description: form.getValues("Description"),
     });
     setSelectedImageName(null);
     setSelectedImageUrl(null);
@@ -188,6 +195,21 @@ export function UploadDialog() {
                 </FormItem>
               )}
             />
+
+            {/* Description Field */}
+          <FormField
+            control={form.control}
+            name="Description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter image description" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
             <DialogFooter>
               <Button type="submit" disabled={isUploading}>
                 Submit
